@@ -27,3 +27,13 @@ jobs:
           coverage run --source=app -m pytest test.py
           coverage report -m
           coverage xml -i
+
+      - name: Heroku :: Login to Heroku Container registry
+        env: 
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:login    
+
+      - name: Heroku :: Docker Build Image & Push Heroku Registry
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web  
