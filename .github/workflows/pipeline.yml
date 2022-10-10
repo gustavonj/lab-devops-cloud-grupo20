@@ -9,8 +9,8 @@ on:
 
 jobs:
   Tests:
-   name: "CI - Tests"
     runs-on: ubuntu-latest
+    name: "CI - Tests"
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
