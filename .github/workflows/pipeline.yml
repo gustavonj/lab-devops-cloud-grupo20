@@ -1,0 +1,29 @@
+# Nome do Workflow
+name: DevOpsLab Pipeline
+
+# Evento que irá acionar a pipeline
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Install Requirements
+        run:  pip install flask flask-wtf pytest pytest-cov
+
+      - name: Run Unit Tests 
+        run: |
+          coverage run --source=app -m pytest test.py
+          coverage report -m
+          coverage xml -i
