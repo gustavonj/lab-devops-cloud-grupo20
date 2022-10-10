@@ -74,10 +74,10 @@ jobs:
 
       - name: "Google Cloud :: Auth AppEngine"
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
         uses: 'google-github-actions/auth@v0'
         with:
-          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+          credentials_json: '${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}'
 
       - name: "Google Cloud :: Deploy to App Engine"
         id: appengine
