@@ -10,6 +10,7 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    name: "CI - Build"
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -37,3 +38,13 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web  
+
+  DeployHomolog:
+    needs: Build
+    runs-on: ubuntu-latest
+    name: "CD - Release Homologacao on Heroku"
+    steps:
+      - name: "Heroku :: Deploy Application"
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web      
