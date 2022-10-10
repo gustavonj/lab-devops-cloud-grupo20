@@ -41,10 +41,10 @@ jobs:
 
       - name: "Google Cloud :: Docker Login"
         env:
-          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}
           ARTIFACT_REGISTRY:  ${{ secrets.ARTIFACT_REGISTRY}}
         run: | 
-          echo '${{ secrets.GOOGLE_CREDENTIALS }}' > key.json
+          echo '${{ secrets.GOOGLE_CLOUD_CREDENTIALS }}' > key.json
           cat key.json | docker login -u _json_key --password-stdin ${{ secrets.ARTIFACT_REGISTRY }}
 
       - name: "Google Cloud :: Docker Build Image & Push to Artifact Registry"
