@@ -64,8 +64,7 @@ jobs:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web  
 
-
-   DeployProduction:
+  DeployProduction:
     needs: DeployHomolog
     runs-on: ubuntu-latest
     name: "CD - Release Producao on Google Cloud App Engine"
