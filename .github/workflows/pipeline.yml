@@ -8,16 +8,16 @@ on:
       - main
 
 jobs:
-  Build:
+  Tests:
+   name: "CI - Tests"
     runs-on: ubuntu-latest
-    name: "CI - Build"
     steps:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.10'
 
-      - name: Checkout Repository
+      - name: Checkout Repo
         uses: actions/checkout@v2
 
       - name: Install Requirements
@@ -29,11 +29,24 @@ jobs:
           coverage report -m
           coverage xml -i
 
-      - name: Run SonarCloud Scan
+      - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
+  
+  Build:
+    needs: Tests
+    runs-on: ubuntu-latest
+    name: "CI - Build"
+    steps:
+    
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: New Relic License
+        run: |
+          sed -i "s/licensekey/${{ secrets.NEW_RELIC_LICENSE_KEY }}/g" Dockerfile
     
       - name: "Heroku :: Login to Heroku Container registry"
         env: 
